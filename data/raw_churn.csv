@@ -1,0 +1,5 @@
+customer_id,signup_date,last_login_date,monthly_charges,tenure_months,contract_type,churn
+CUST001,2022-03-01,2024-06-01,49.99,27,month-to-month,0
+CUST002,2021-11-15,2024-06-02,89.50,31,two-year,0
+CUST003,2023-08-01,2024-05-20,29.99,10,month-to-month,1
+CUST004,2020-01-10,2024-06-03,65.00,52,one-year,0

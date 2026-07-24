@@ -1,0 +1,34 @@
+name: Data Schema Gate
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "**.csv"
+      - "schema.py"
+      - "test_schema.py"
+  push:
+    branches: [main]
+
+jobs:
+  validate-schema:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install pandera pandas pytest
+
+      - name: Run schema unit tests (proves the gate itself works)
+        run: pytest test_schema.py -v
+
+      - name: Validate actual raw data against schema
+        # This step is the real gate: fails the whole workflow (and blocks
+        # merge, if branch protection requires this check) if the CSV
+        # doesn't conform. Adjust the path to your real raw data file.
+        run: python schema.py data/raw_churn.csv
